@@ -1,0 +1,3 @@
+#!/bin/bash
+
+grep -B1000 Code: virtualenv.el | head -n -1 | cut -c4- > README
