@@ -233,7 +233,11 @@ the virtual environment or if not a string then query the user."
 (add-hook 'find-file-hook 'virtualenv-minor-mode-on t)
 
 ;; This provides support for both python-mode.el and python.el by
-;; adding defadvice to py-shell and python-shell.
+;; adding defadvice to py-shell and python-shell. This is kind of
+;; ugly, but I would rather do it this way than maintain to separate
+;; copies of the same defadvice functionality. The day when python.el
+;; has finally been merged into python-mode.el will be the day this
+;; ugliness goes away.
 (dolist (list '((py-shell . "python-mode") 
 		(python-shell . "python")))
   (let* ((func (car list))
@@ -267,8 +271,6 @@ the virtual environment or if not a string then query the user."
 	       (virtualenv-minor-mode-on)
 	       ))
 	 ad-do-it)))
-
-
 ))))
 
 
