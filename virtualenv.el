@@ -151,6 +151,7 @@ not set, then use `virtualenv-mode-name-default'."
     (make-local-variable 'virtualenv-mode-name)
     (setq virtualenv-mode-name string)))
 
+;;;###autoload
 (defun virtualenv-workon (&optional env)
   "Activate a virtual environment for python.
 Optional argument ENV if non-nil, either use the string given as
