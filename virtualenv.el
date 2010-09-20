@@ -6,8 +6,8 @@
 ;; Maintainer: Aaron Culich <aculich@gmail.com>
 ;; Created: September 2010
 ;; Keywords: python virtualenv
-;; Vcs-git: git://github.com/aculich/virtualenv.el.git
-;; Vcs-Browser: http://github.com/aculich/virtualenv.el.git
+;; Vcs-git: git://github.com/aculich/virtualenv.git
+;; Vcs-Browser: http://github.com/aculich/virtualenv
 
 ;; virtualenv.el is free software: you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by the Free
@@ -26,7 +26,10 @@
 
 ;; This is a minor mode for setting the virtual environment for the
 ;; Python shell using virtualenv and supports both python-mode.el and
-;; python.el.
+;; python.el. This minor mode was inspired by an earlier
+;; implementation by Jesse Legg and Jeremiah Dodds, however this code
+;; is a complete re-write with a GPLv3 license consistent with
+;; GNU Emacs and python-mode.el.
 
 ;; There are two ways to use virtualenv. 
 
