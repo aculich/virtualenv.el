@@ -13,62 +13,59 @@
 ;; under the terms of the GNU General Public License as published by the Free
 ;; Software Foundation, either version 3 of the License, or (at your option)
 ;; any later version.
-;;
+
 ;; virtualenv.el is distributed in the hope that it will be useful, but
 ;; WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-;; or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+;; or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
 ;; for more details.
-;;
+
 ;; You should have received a copy of the GNU General Public License along
-;; with virtualenv.el.  If not, see <http://www.gnu.org/licenses/>.
+;; with virtualenv.el. If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
-;; This is a minor mode for setting the virtual environment for the
-;; Python shell using virtualenv and supports both python-mode.el and
-;; python.el. This minor mode was inspired by an earlier
-;; implementation by Jesse Legg and Jeremiah Dodds, however this code
-;; is a complete re-write with a GPLv3 license consistent with
-;; GNU Emacs and python-mode.el.
+;; This is a minor mode for setting the virtual environment for the Python
+;; shell using virtualenv and supports both python-mode.el and python.el.
+;; This minor mode was inspired by an earlier implementation by Jesse Legg
+;; and Jeremiah Dodds, however this code is a complete re-write with a GPLv3
+;; license consistent with GNU Emacs and python-mode.el.
 
 ;; There are two ways to use virtualenv. 
 
 ;; 1) The quickest way to get started is to simply type:
-;;      M-x virtualenv-workon
-;;    Which will prompt you to enter the name of a directory in
-;;    ~/.virtualenvs that contains your chosen environment. You can
-;;    hit tab to show the available completions.
+;;        M-x virtualenv-workon
+;; Which will prompt you to enter the name of a directory in ~/.virtualenvs
+;; that contains your chosen environment. You can hit tab to show the
+;; available completions.
 
-;;    You'll know that you're in virtualenv mode now when you see the
-;;    name of the virtualenv you selected in brackets. So if I were to
-;;    select my turbogears environment that I call tg2.1 then I would
-;;    see [tg2.1] appear in the mode line. To make sure you're new
-;;    python shell is set up correctly you can try running this little
-;;    snippet of python code:
+;; You'll know that you're in virtualenv mode now when you see the name of
+;; the virtualenv you selected in brackets. So if I were to select my
+;; turbogears environment that I call tg2.1 then I would see [tg2.1] appear
+;; in the mode line. To make sure you're new python shell is set up correctly
+;; you can try running this little snippet of python code:
 
-;;      import os, sys
-;;      print os.environ
-;;      print sys.path
+;;     import os, sys
+;;     print os.environ
+;;     print sys.path
 
 ;; 2) The recommended way to use virtualenv minor mode is to use a
-;; .dir-locals.el file in the root of your project directory. There
-;; are two buffer-local variables that you can set for virtualenv as
-;; shown in this example:
+;; .dir-locals.el file in the root of your project directory. There are two
+;; buffer-local variables that you can set for virtualenv as shown in this
+;; example:
 
-;; in file /path/to/project/.dir-locals.el:
-;; ((nil . ((virtualenv-workon . "tg2.1")
-;; 	    (virtualenv-default-directory . "/path/to/project/subdir"))))
+;;     in file /path/to/project/.dir-locals.el:
+;;     ((nil . ((virtualenv-workon . "tg2.1")
+;;              (virtualenv-default-directory . "/path/to/project/subdir"))))
 
-;; The .dir-locals.el is new in Emacs23 and is useful for other
-;; things, too. You should read the dir-locals docs to understand the
-;; format. The variable virtualenv-workon should just be a string the
-;; same as you'd give to the interactive function. The variable
-;; virtualenv-default-directory is useful when you want to have your
-;; python process rooted in a particular directory when it starts, so
-;; that no matter where you are in your project's hierarchy, if you
-;; launch a python shell. This method is recommended because it is
-;; more flexible and will allow multiple virtualenvs running at once
-;; in future versions.
+;; The .dir-locals.el is new in Emacs23 and is useful for other things, too.
+;; You should read the dir-locals docs to understand the format. The variable
+;; virtualenv-workon should just be a string the same as you'd give to the
+;; interactive function. The variable virtualenv-default-directory is useful
+;; when you want to have your python process rooted in a particular directory
+;; when it starts, so that no matter where you are in your project's
+;; hierarchy, if you launch a python shell it will always be rooted in the
+;; same place. This method is recommended because it is more flexible and
+;; will allow multiple virtualenvs running at once in future versions.
 
 ;;; Bugs:
 
@@ -109,8 +106,9 @@ better to use this than for it to appear blank.")
 
 (defvar virtualenv-default-directory nil
   "Buffer-local variable that should be set in your project's
-top-level .dir-locals.el file as the place you want to start the python shell.
-When using paster set this to where your .ini files live, e.g.: \
+top-level .dir-locals.el file as the place you want to start the
+python shell. When using paster set this to where your .ini files
+live, e.g.: \
 ((nil . ((virtualenv-default-directory . \"/projects/foo\"))))")
 (put 'virtualenv-default-directory 'safe-local-variable 'stringp)
 
@@ -275,15 +273,14 @@ the virtual environment or if not a string then query the user."
 
 
 ;; This is a hack on top of a hack, but it's the way I think dir-local
-;; variables should work. The original implementation only loads
-;; dir-locals if the buffer has a filename associated with it, however
-;; for a python comint buffer or for dired, a call to
-;; (buffer-file-name) returns nil. In that case we should use the
-;; value of default-directory to check for the presence of
-;; .dir-locals.el. This should actually have no effect on any existing
-;; code because this hack-local-variables is only added to the
-;; find-file-hook, so we can selectively enable this for other buffers
-;; that we create, like python shells or dired.
+;; variables should work. The original implementation only loads dir-locals
+;; if the buffer has a filename associated with it, however for a python
+;; comint buffer or for dired, a call to (buffer-file-name) returns nil. In
+;; that case we should use the value of default-directory to check for the
+;; presence of .dir-locals.el. This should actually have no effect on any
+;; existing code because this hack-local-variables is only added to the
+;; find-file-hook, so we can selectively enable this for other buffers that
+;; we create, like python shells or dired.
 (defun virtualenv-hack-dir-local-variables ()
   "Read per-directory local variables for the current buffer.
 Store the directory-local variables in `dir-local-variables-alist'
