@@ -70,6 +70,11 @@
 ;; more flexible and will allow multiple virtualenvs running at once
 ;; in future versions.
 
+;;; Bugs:
+
+;;  All bug reports can be filed by opening a new issue on github at:
+;;  http://github.com/aculich/virtualenv/issues
+
 ;;; TODO:
 
 ;; * support for multiple python processes in different virtualenvs
@@ -135,7 +140,6 @@ not set, then use `virtualenv-mode-name-default'."
     (if (string= " " (substring name 0 1))
 	name
       (format virtualenv-mode-string-format name))))
-
 
 (defun virtualenv-update-mode-name (&optional name)
   "Update the mode line with a string formatted for virtualenv.
