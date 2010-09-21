@@ -79,5 +79,5 @@ in future versions.
 
 * support for multiple python processes in different virtualenvs
 
-* add "paster shell" feature
+* Add "paster shell" features
 
