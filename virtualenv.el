@@ -79,6 +79,10 @@
 
 ;; * support for multiple python processes in different virtualenvs
 
+;; * add "paster shell" features
+
+;; * add support for shell-command
+
 ;;; Code:
 
 (defgroup virtualenv nil
