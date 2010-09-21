@@ -79,7 +79,9 @@
 
 ;; * support for multiple python processes in different virtualenvs
 
-;; * Add "paster shell" features
+;; * add "paster shell" features
+
+;; * add support for shell-command
 
 ;;; Code:
 
