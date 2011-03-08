@@ -322,9 +322,17 @@ and `file-local-variables-alist', without applying them."
 
 (defalias 'hack-dir-local-variables 'virtualenv-hack-dir-local-variables)
 
+(defvar virtualenv-dir-local-not-supported
+  (cond ((featurep 'xemacs)
+         "XEmacs is not officially supported.")
+        ((not (and (>= emacs-major-version 23)
+                   (>= emacs-minor-version 1)))
+         "Emacs 23.1 is required for .dir-locals.el support.")))
+
 (eval-after-load "dired"
   '(progn
-     (add-hook 'dired-mode-hook 'hack-local-variables)
+     (unless virtualenv-dir-local-not-supported
+       (add-hook 'dired-mode-hook 'hack-local-variables))
      (add-hook 'dired-mode-hook 'virtualenv-minor-mode-on t)))
 
 (provide 'virtualenv)
