@@ -31,7 +31,7 @@ implementation by Jesse Legg and Jeremiah Dodds, however this code
 is a complete re-write with a GPLv3 license consistent with
 GNU Emacs and python-mode.el.
 
-There are two ways to use virtualenv. 
+There are two ways to use virtualenv.
 
 1) The quickest way to get started is to simply type:
      M-x virtualenv-workon
@@ -51,13 +51,16 @@ There are two ways to use virtualenv.
      print sys.path
 
 2) The recommended way to use virtualenv minor mode is to use a
-.dir-locals.el file in the root of your project directory. There
-are two buffer-local variables that you can set for virtualenv as
-shown in this example:
+.dir-locals.el file in the root of your project directory.
+
+REQUIRES: Emacs 23.1 or higher.
+
+There are two buffer-local variables that you can set for virtualenv as shown
+in this example:
 
 in file /path/to/project/.dir-locals.el:
 ((nil . ((virtualenv-workon . "tg2.1")
-	    (virtualenv-default-directory . "/path/to/project/subdir"))))
+	 (virtualenv-default-directory . "/path/to/project/subdir"))))
 
 The .dir-locals.el is new in Emacs23 and is useful for other
 things, too. You should read the dir-locals docs to understand the
