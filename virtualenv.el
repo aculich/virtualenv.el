@@ -213,7 +213,9 @@ the virtual environment or if not a string then query the user."
 	      (kill-buffer buffer))
 	    (setq virtualenv-workon-session env)
 	    (when virtualenv-workon-starts-python
-	      (cond ((fboundp 'py-shell)
+	      (cond ((fboundp 'python-shell-switch-to-shell)
+                     (python-shell-switch-to-shell))
+                    ((fboundp 'py-shell)
 		     (py-shell))
 		    ((fboundp 'python-shell)
 		     (python-shell))
@@ -240,7 +242,8 @@ the virtual environment or if not a string then query the user."
 
 ;; This provides support for both python-mode.el and python.el by
 ;; adding defadvice to py-shell and python-shell.
-(dolist (list '((py-shell . "python-mode")
+(dolist (list '((python-shell-switch-to-shell . "python")
+                (py-shell . "python-mode")
 		(python-shell . "python")))
   (let* ((func (car list))
 	 (file (cdr list))
