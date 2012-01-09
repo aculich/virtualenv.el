@@ -73,6 +73,13 @@ launch a python shell. This method is recommended because it is
 more flexible and will allow multiple virtualenvs running at once
 in future versions.
 
+ Notes:
+
+ virtualenv-workon will now modify Emacs' exec-path as well as the
+ shell environment's PATH so that if you run shell-command or launch a
+ command in an emacs subprocess it will use any commands it finds in
+ your ~/.virtualenvs/<env>/bin directory.
+
  Bugs:
 
  All bug reports can be filed by opening a new issue on github at:
@@ -83,6 +90,3 @@ in future versions.
 * support for multiple python processes in different virtualenvs
 
 * add "paster shell" features
-
-* add support for shell-command
-

@@ -131,6 +131,10 @@ top-level .dir-locals.el file, e.g.: \
 (defvar virtualenv-workon-history nil
   "History list of virtual environments used.")
 
+(defvar virtualenv-saved-path nil
+  "Saves `exec-path' and the `PATH' environment variable when
+  invoking `virtualenv-workon'.")
+
 (defun virtualenv-formatted-mode-string (&optional name)
   "Format the `virtualenv-mode-name' string.
 Optional argument NAME is a string that will appear as [NAME] in
@@ -190,8 +194,8 @@ the virtual environment or if not a string then query the user."
 			  (lambda (d)
 			    (when (file-exists-p
 				   (expand-file-name
-				    (concat
-				     virtualenv-root "/" d "/bin")))
+				    (concat d "/bin")
+                                    virtualenv-root))
 			      d))
 			  (directory-files virtualenv-root nil "^[^.]"))))
 		  (result (completing-read prompt dirs nil t nil
@@ -212,6 +216,16 @@ the virtual environment or if not a string then query the user."
 	    (when buffer
 	      (kill-buffer buffer))
 	    (setq virtualenv-workon-session env)
+            (let* ((bin (expand-file-name
+                         (concat env "/bin")
+                         virtualenv-root))
+                   (oldpath (or (car virtualenv-saved-path)
+                                (getenv "PATH")))
+                   (oldexec (or (cdr virtualenv-saved-path)
+                                exec-path)))
+              (setq virtualenv-saved-path (cons oldpath oldexec))
+              (add-to-list 'exec-path bin)
+              (setenv "PATH" (concat bin ":" oldpath)))
 	    (when virtualenv-workon-starts-python
 	      (cond ((fboundp 'python-shell-switch-to-shell)
                      (python-shell-switch-to-shell))
