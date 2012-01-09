@@ -159,6 +159,10 @@ not set, then use `virtualenv-mode-name-default'."
     (make-local-variable 'virtualenv-mode-name)
     (setq virtualenv-mode-name string)))
 
+(defun virtualenv-bin-script (name)
+  "Get the path of a script installed in the virtualenv's script path"
+  (concat virtualenv-root "/" virtualenv-workon-session "/bin/" name))
+
 ;;;###autoload
 (defun virtualenv-workon (&optional env)
   "Activate a virtual environment for python.
@@ -236,6 +240,11 @@ the virtual environment or if not a string then query the user."
 		    (t (error "Could not start a python shell!"))))
 	    (message (format "Now using virtualenv: %s" env)))
 	(message "Not changing virtualenv")))))
+
+(defun virtualenv-run-command (&optional cmd)
+  (interactive "P")
+  (compile (concat virtualenv-bin-script cmd)))
+  
 
 ;;;###autoload
 (defun virtualenv-deactivate ()
