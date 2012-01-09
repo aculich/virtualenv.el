@@ -238,6 +238,18 @@ the virtual environment or if not a string then query the user."
 	(message "Not changing virtualenv")))))
 
 ;;;###autoload
+(defun virtualenv-deactivate ()
+  (interactive)
+
+  (when virtualenv-saved-path
+    (setenv "PATH" (car virtualenv-saved-path))
+    (setq exec-path (cdr virtualenv-saved-path)))
+
+  (setq virtualenv-workon-session nil
+        virtualenv-saved-path nil)
+  (virtualenv-minor-mode 0))
+
+;;;###autoload
 (define-minor-mode virtualenv-minor-mode
   nil					; use default docstring
   nil					; the initial value

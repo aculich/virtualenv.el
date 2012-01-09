@@ -80,6 +80,9 @@ in future versions.
  command in an emacs subprocess it will use any commands it finds in
  your ~/.virtualenvs/<env>/bin directory.
 
+ virtualenv-deactivate will restore exec-path and PATH back to their
+ original state prior to using the virtualenv-workon command.
+
  Bugs:
 
  All bug reports can be filed by opening a new issue on github at:
