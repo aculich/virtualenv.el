@@ -181,6 +181,20 @@ the virtual environment or if not a string then query the user."
 	   virtualenv-workon-session)
 	  (t
 	   (let* ((default (car virtualenv-workon-history))
+                  (root (or (unless (file-directory-p virtualenv-root)
+                              (let ((dir (read-directory-name
+                                          "Virtualenv Directory: "
+                                          (expand-file-name "~"))))
+                                (funcall 
+                                 (if (y-or-n-p
+                                      (format
+                                       "Save %s as virtualenv-root for future sessions?"
+                                       dir))
+                                     'customize-save-variable
+                                   'customize-set-variable)
+                                 'virtualenv-root
+                                 dir)))
+                            virtualenv-root))
 		  (prompt (concat
 			   "Virtualenv to activate"
 			   (when default
@@ -195,11 +209,12 @@ the virtual environment or if not a string then query the user."
 			    (when (file-exists-p
 				   (expand-file-name
 				    (concat d "/bin")
-                                    virtualenv-root))
+                                    root))
 			      d))
-			  (directory-files virtualenv-root nil "^[^.]"))))
+			  (directory-files root nil "^[^.]"))))
 		  (result (completing-read prompt dirs nil t nil
 					   'virtualenv-workon-history)))
+
 	     ;; if the user entered nothing, then return the default
 	     ;; if there is one
 	     (if (not (string= result ""))
@@ -288,7 +303,9 @@ the virtual environment or if not a string then query the user."
 	       (cd virtualenv-default-directory))
 	     (let* ((activate (expand-file-name
 			       "activate"
-			       (concat virtualenv-root "/" workon "/bin")))
+			       (expand-file-name
+                                (concat workon "/bin")
+                                virtualenv-root)))
 		    (process-environment
 		     (when (file-exists-p activate)
 		       (split-string
