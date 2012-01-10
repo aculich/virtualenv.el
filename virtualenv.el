@@ -89,7 +89,8 @@
   "Emacs support for python virtualenv."
   :group 'python)
 
-(defcustom virtualenv-root "~/.virtualenvs"
+(defcustom virtualenv-root
+  (or (getenv "WORKON_HOME") "~/.virtualenvs")
   "Default location for user's virtual environments"
   :group 'virtualenv
   :type 'directory)
