@@ -160,6 +160,8 @@ not set, then use `virtualenv-mode-name-default'."
     (make-local-variable 'virtualenv-mode-name)
     (setq virtualenv-mode-name string)))
 
+(defalias 'virutalenv-old-hack-dir-local-variables (symbol-function 'hack-dir-local-variables))
+
 ;;;###autoload
 (defun virtualenv-workon (&optional env)
   "Activate a virtual environment for python.
@@ -171,6 +173,8 @@ the virtual environment or if not a string then query the user."
   ;; string (e.g. invoked interactively with C-u prefix arg)
   (when (and env (not (stringp env)))
     (setq virtualenv-workon-session nil))
+
+  (defalias 'hack-dir-local-variables 'virtualenv-hack-dir-local-variables)
 
   ;; if env is a string, then just use it, otherwise check to see if
   ;; we have already queried the user the session, at last querying
@@ -257,6 +261,8 @@ the virtual environment or if not a string then query the user."
 (defun virtualenv-deactivate ()
   (interactive)
 
+  (defalias 'hack-dir-local-variables (symbol-function 'old-hack-dir-local-variables))
+
   (when virtualenv-saved-path
     (setenv "PATH" (car virtualenv-saved-path))
     (setq exec-path (cdr virtualenv-saved-path)))
@@ -335,13 +341,27 @@ the virtual environment or if not a string then query the user."
 ;; code because this hack-local-variables is only added to the
 ;; find-file-hook, so we can selectively enable this for other buffers
 ;; that we create, like python shells or dired.
+
+(defcustom virtualenv-enable-local-variables :all
+  "Defaults to :all and allows `virtualenv-hack-dir-local-variables'
+to override the value of `enable-local-variables' for convenience when
+`virtualenv-workon' is enabled."
+  :risky t
+  :type '(choice (const :tag "Query Unsafe" t)
+		 (const :tag "Safe Only" :safe)
+		 (const :tag "Do all" :all)
+		 (const :tag "Use value of `enable-local-variables'" nil)
+		 (other :tag "Query" other))
+  :group 'virtualenv)
+
 (defun virtualenv-hack-dir-local-variables ()
   "Read per-directory local variables for the current buffer.
 Store the directory-local variables in `dir-local-variables-alist'
 and `file-local-variables-alist', without applying them."
   (let ((path (or (buffer-file-name)
 		  default-directory)))
-    (when (and enable-local-variables
+    (when (and (or virtualenv-enable-local-variables
+                   enable-local-variables)
 	       path
 	       (not (file-remote-p path)))
       ;; Find the variables file.
@@ -365,9 +385,12 @@ and `file-local-variables-alist', without applying them."
 		  (setq dir-local-variables-alist
 			(assq-delete-all (car elt) dir-local-variables-alist)))
 		(push elt dir-local-variables-alist))
-	      (hack-local-variables-filter variables dir-name))))))))
-
-(defalias 'hack-dir-local-variables 'virtualenv-hack-dir-local-variables)
+              ;; override enable-local-variables with
+              ;; virtualenv-enable-local-variables if set
+	      (let ((enable-local-variables
+                     (or virtualenv-enable-local-variables
+                         enable-local-variables)))
+                (hack-local-variables-filter variables dir-name)))))))))
 
 (defvar virtualenv-dir-local-not-supported
   (cond ((featurep 'xemacs)
