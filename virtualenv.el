@@ -261,7 +261,7 @@ the virtual environment or if not a string then query the user."
 (defun virtualenv-deactivate ()
   (interactive)
 
-  (defalias 'hack-dir-local-variables (symbol-function 'old-hack-dir-local-variables))
+  (defalias 'hack-dir-local-variables (symbol-function 'virtualenv-old-hack-dir-local-variables))
 
   (when virtualenv-saved-path
     (setenv "PATH" (car virtualenv-saved-path))
