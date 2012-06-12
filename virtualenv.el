@@ -409,3 +409,5 @@ and `file-local-variables-alist', without applying them."
      (add-hook 'dired-mode-hook 'virtualenv-minor-mode-on t)))
 
 (provide 'virtualenv)
+
+;;; virtualenv.el ends here
