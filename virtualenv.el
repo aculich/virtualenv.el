@@ -320,7 +320,7 @@ the virtual environment or if not a string then query the user."
 			 (format "source %s; (cd %s && env)"
 				 activate default-directory))
 			"\n")))
-		    (exec-path (split-string (getenv "PATH") ":")))
+		    (exec-path (split-string (getenv "PATH") path-separator)))
 	       ad-do-it
 	       (hack-local-variables)
 	       (virtualenv-minor-mode-on)
