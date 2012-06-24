@@ -253,6 +253,8 @@ the virtual environment or if not a string then query the user."
 		     (py-shell))
 		    ((fboundp 'python-shell)
 		     (python-shell))
+		    ((fboundp 'run-python)
+		     (run-python))
 		    (t (error "Could not start a python shell!"))))
 	    (message (format "Now using virtualenv: %s" env)))
 	(message "Not changing virtualenv")))))
@@ -292,7 +294,8 @@ the virtual environment or if not a string then query the user."
 ;; adding defadvice to py-shell and python-shell.
 (dolist (list '((python-shell-switch-to-shell . "python")
                 (py-shell . "python-mode")
-		(python-shell . "python")))
+		(python-shell . "python")
+		(run-python . "python")))
   (let* ((func (car list))
 	 (file (cdr list))
 	 (doc (format "Set the environment with virtualenv before running %s." func)))
@@ -406,3 +409,5 @@ and `file-local-variables-alist', without applying them."
      (add-hook 'dired-mode-hook 'virtualenv-minor-mode-on t)))
 
 (provide 'virtualenv)
+
+;;; virtualenv.el ends here
