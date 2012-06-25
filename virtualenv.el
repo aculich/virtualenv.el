@@ -218,7 +218,8 @@ the virtual environment or if not a string then query the user."
 			      d))
 			  (directory-files root nil "^[^.]"))))
 		  (result (completing-read prompt dirs nil t nil
-					   'virtualenv-workon-history)))
+					   'virtualenv-workon-history
+                                           default)))
 
 	     ;; if the user entered nothing, then return the default
 	     ;; if there is one
