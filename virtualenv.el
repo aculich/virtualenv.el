@@ -1,6 +1,6 @@
 ;;; virtualenv.el --- Virtualenv for Python  -*- coding: utf-8 -*-
 
-;; Copyright (c) 2010 Aaron Culich
+;; Copyright (c) 2010-2012 Aaron Culich
 
 ;; Author: Aaron Culich <aculich@gmail.com>
 ;; Maintainer: Aaron Culich <aculich@gmail.com>
