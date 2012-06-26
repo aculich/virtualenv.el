@@ -4,6 +4,7 @@
 
 ;; Author: Aaron Culich <aculich@gmail.com>
 ;; Maintainer: Aaron Culich <aculich@gmail.com>
+;; Version: 1.1
 ;; Created: September 2010
 ;; Keywords: python virtualenv
 ;; Vcs-git: git://github.com/aculich/virtualenv.git
