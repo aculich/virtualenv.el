@@ -113,6 +113,11 @@ better to use this than for it to appear blank.")
 
 (defvar virtualenv-mode-name virtualenv-mode-name-default)
 
+(defvar virtualenv-executables-dir 
+  (if (eq system-type 'windows-nt) "/Scripts" "/bin")
+  "The name of the directory containing executables. It is system
+dependent.")
+
 (defvar virtualenv-default-directory nil
   "Buffer-local variable that should be set in your project's
 top-level .dir-locals.el file as the place you want to start the python shell.
@@ -214,7 +219,7 @@ the virtual environment or if not a string then query the user."
 			  (lambda (d)
 			    (when (file-exists-p
 				   (expand-file-name
-				    (concat d "/bin")
+				    (concat d virtualenv-executables-dir)
                                     root))
 			      d))
 			  (directory-files root nil "^[^.]"))))
@@ -239,7 +244,7 @@ the virtual environment or if not a string then query the user."
 	      (kill-buffer buffer))
 	    (setq virtualenv-workon-session env)
             (let* ((bin (expand-file-name
-                         (concat env "/bin")
+                         (concat env virtualenv-executables-dir)
                          virtualenv-root))
                    (oldpath (or (car virtualenv-saved-path)
                                 (getenv "PATH")))
@@ -247,7 +252,12 @@ the virtual environment or if not a string then query the user."
                                 exec-path)))
               (setq virtualenv-saved-path (cons oldpath oldexec))
               (add-to-list 'exec-path bin)
-              (setenv "PATH" (concat bin ":" oldpath)))
+	      (setenv "PATH"
+		      (if (eq system-type 'windows-nt)
+			  (concat bin path-separator
+				  (replace-regexp-in-string
+				   (regexp-quote "/") "\\" oldpath))
+			(concat bin path-separator oldpath))))
 	    (when virtualenv-workon-starts-python
 	      (cond ((fboundp 'python-shell-switch-to-shell)
                      (python-shell-switch-to-shell))
@@ -316,14 +326,17 @@ the virtual environment or if not a string then query the user."
 	     (let* ((activate (expand-file-name
 			       "activate"
 			       (expand-file-name
-                                (concat workon "/bin")
+                                (concat workon virtualenv-executables-dir)
                                 virtualenv-root)))
 		    (process-environment
 		     (when (file-exists-p activate)
 		       (split-string
 			(shell-command-to-string
+			 (if (eq system-type 'windows-nt)
+			     (format "call %s; (cd %s && set)"
+				     activate default-directory) ; TODO Fixme
 			 (format "source %s; (cd %s && env)"
-				 activate default-directory))
+				 activate default-directory)))
 			"\n")))
 		    (exec-path (split-string (getenv "PATH") path-separator)))
 	       ad-do-it
