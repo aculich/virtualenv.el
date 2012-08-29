@@ -333,8 +333,8 @@ the virtual environment or if not a string then query the user."
 		       (split-string
 			(shell-command-to-string
 			 (if (eq system-type 'windows-nt)
-			     (format "call %s; (cd %s && set)"
-				     activate default-directory) ; TODO Fixme
+			     (format "call %s & cd %s && set"
+				     activate default-directory)
 			 (format "source %s; (cd %s && env)"
 				 activate default-directory)))
 			"\n")))
