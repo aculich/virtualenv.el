@@ -161,7 +161,7 @@ not set, then use `virtualenv-mode-name-default'."
     (make-local-variable 'virtualenv-mode-name)
     (setq virtualenv-mode-name string)))
 
-(defalias 'virutalenv-old-hack-dir-local-variables (symbol-function 'hack-dir-local-variables))
+(defalias 'virtualenv-old-hack-dir-local-variables (symbol-function 'hack-dir-local-variables))
 
 ;;;###autoload
 (defun virtualenv-workon (&optional env)
