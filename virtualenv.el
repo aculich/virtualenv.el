@@ -1,4 +1,4 @@
-;;; virtualenv.el --- Virtualenv for Python  -*- coding: utf-8 -*-
+;;; virtualenv.el --- Virtualenv for Python
 
 ;; Copyright (c) 2010-2012 Aaron Culich
 
