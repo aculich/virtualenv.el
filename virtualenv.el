@@ -324,8 +324,13 @@ the virtual environment or if not a string then query the user."
 	   (progn
 	     (when (stringp virtualenv-default-directory)
 	       (cd virtualenv-default-directory))
+	      (make-local-variable 'activate-shell-script)
+	      (setq activate-shell-script "activate")
+	      (when (string-match "csh" (getenv "SHELL"))
+		(setq activate-shell-script "activate.csh")
+		)
 	     (let* ((activate (expand-file-name
-			       "activate"
+			       activate-shell-script
 			       (expand-file-name
                                 (concat workon virtualenv-executables-dir)
                                 virtualenv-root)))
