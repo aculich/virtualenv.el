@@ -26,6 +26,22 @@
 
 ;;; Commentary:
 
+;; I haven't maintained https://github.com/aculich/virtualenv.el in a
+;; long time since I use docker and LXC for a better virtual
+;; environment for my development purposes that provides stronger
+;; isolation, first-class network interfaces, and support for
+;; non-python stacks.
+
+;; If you still want to work with virtualenv There are at least 3
+;; newer, actively maintained packages available on MELPA
+;; <http://melpa.milkbox.net/> that are superior to my old one that
+;; have taken its place:
+;;
+;; pyvenv:             https://github.com/jorgenschaefer/pyvenv
+;; virtualenvwrapper:  https://github.com/porterjamesj/virtualenvwrapper.el
+;; python-environment: https://github.com/tkf/emacs-python-environment
+
+
 ;; This is a minor mode for setting the virtual environment for the
 ;; Python shell using virtualenv and supports both python-mode.el and
 ;; python.el. This minor mode was inspired by an earlier
