@@ -32,7 +32,7 @@
 ;; isolation, first-class network interfaces, and support for
 ;; non-python stacks.
 
-;; If you still want to work with virtualenv There are at least 3
+;; If you still want to work with virtualenv there are at least 3
 ;; newer, actively maintained packages available on MELPA
 ;; <http://melpa.milkbox.net/> that are superior to my old one that
 ;; have taken its place:
