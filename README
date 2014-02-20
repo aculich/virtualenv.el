@@ -1,4 +1,21 @@
- virtualenv.el --- Virtualenv for Python  -*- coding: utf-8 -*-
+**WARNING: This virtualenv package has been deprecated!**
+
+I haven't maintained https://github.com/aculich/virtualenv.el in a
+long time since I use docker and LXC for a better virtual
+environment for my development purposes that provides stronger
+isolation, first-class network interfaces, and support for
+non-python stacks.
+
+If you still want to work with virtualenv there are at least 3
+newer, actively maintained packages available on MELPA
+<http://melpa.milkbox.net/> that are superior to my old one that
+have taken its place:
+
+pyvenv:             https://github.com/jorgenschaefer/pyvenv
+virtualenvwrapper:  https://github.com/porterjamesj/virtualenvwrapper.el
+python-environment: https://github.com/tkf/emacs-python-environment
+
+virtualenv.el --- Virtualenv for Python  -*- coding: utf-8 -*-
 
 Copyright (c) 2010, 2012 Aaron Culich
 
