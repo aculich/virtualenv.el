@@ -1,3 +1,5 @@
+;;; **WARNING: This virtualenv package has been deprecated!**
+
 ;;; virtualenv.el --- Virtualenv for Python
 
 ;; Copyright (c) 2010-2012 Aaron Culich
@@ -25,6 +27,8 @@
 ;; with virtualenv.el.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+
+;; **WARNING: This virtualenv package has been deprecated!**
 
 ;; I haven't maintained https://github.com/aculich/virtualenv.el in a
 ;; long time since I use docker and LXC for a better virtual
