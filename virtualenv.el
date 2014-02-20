@@ -114,7 +114,7 @@ better to use this than for it to appear blank.")
 
 (defvar virtualenv-mode-name virtualenv-mode-name-default)
 
-(defvar virtualenv-executables-dir 
+(defvar virtualenv-executables-dir
   (if (eq system-type 'windows-nt) "/Scripts" "/bin")
   "The name of the directory containing executables. It is system
 dependent.")
@@ -197,7 +197,7 @@ the virtual environment or if not a string then query the user."
                               (let ((dir (read-directory-name
                                           "Virtualenv Directory: "
                                           (expand-file-name "~"))))
-                                (funcall 
+                                (funcall
                                  (if (y-or-n-p
                                       (format
                                        "Save %s as virtualenv-root for future sessions?"
