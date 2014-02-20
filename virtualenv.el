@@ -250,7 +250,16 @@ the virtual environment or if not a string then query the user."
 		 result
 	       default))))))
 
-    (let* ((buffer (get-buffer "*Python*"))
+    (let* ((deprecated
+          "**WARNING: This virtualenv package has been deprecated!**
+  Please switch to an alternate package:
+    pyvenv:             https://github.com/jorgenschaefer/pyvenv
+    virtualenvwrapper:  https://github.com/porterjamesj/virtualenvwrapper.el
+    python-environment: https://github.com/tkf/emacs-python-environment
+**WARNING: This virtualenv package has been deprecated!**
+
+")
+           (buffer (get-buffer "*Python*"))
 	   (kill (or (when buffer
 		       (yes-or-no-p
 			"Python process already running. Kill? ")))))
@@ -285,8 +294,9 @@ the virtual environment or if not a string then query the user."
 		    ((fboundp 'run-python)
 		     (run-python))
 		    (t (error "Could not start a python shell!"))))
-	    (message (format "Now using virtualenv: %s" env)))
-	(message "Not changing virtualenv")))))
+	    (message (concat deprecated
+                       (format "Now using virtualenv: %s" env))))
+	(message (concat deprecated "Not changing virtualenv"))))))
 
 ;;;###autoload
 (defun virtualenv-deactivate ()
